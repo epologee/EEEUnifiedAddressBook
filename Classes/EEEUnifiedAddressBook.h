@@ -27,7 +27,7 @@ extern void CFReleaseIfNotNULL (CFTypeRef ref);
 
 extern CFTypeRef CFRetainIfNotNULL (CFTypeRef ref);
 
-@interface TTTUnifiedAddressBook : NSObject
+@interface EEEUnifiedAddressBook : NSObject
 
 @property(nonatomic, readonly) ABAddressBookRef addressBook;
 
@@ -37,21 +37,21 @@ extern CFTypeRef CFRetainIfNotNULL (CFTypeRef ref);
 
 /**
 Get an array of all cards in the address book.
-@return an array of `TTTUnifiedCard` instances.
+@return an array of `EEEUnifiedCard` instances.
 */
 - (NSArray *)allCards;
 
 /**
 Synchronous search for cards matching a query.
 @param query to search for, will be used by the `ABAddressBookCopyPeopleWithName` method.
-@return an array of `TTTUnifiedCard` instances.
+@return an array of `EEEUnifiedCard` instances.
 */
 - (NSArray *)cardsMatchingQuery:(NSString *)query;
 
 /**
 Asynchronous search for cards matching a query.
 @param query to search for, will be used by the `ABAddressBookCopyPeopleWithName` method.
-@param resultsBlock is passed an array of `TTTUnifiedCard` instances.
+@param resultsBlock is passed an array of `EEEUnifiedCard` instances.
 */
 - (void)cardsMatchingQuery:(NSString *)query withAsyncResults:(void (^)(NSArray *))resultsBlock;
 

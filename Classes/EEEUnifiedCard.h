@@ -22,7 +22,7 @@
 #import <AddressBook/AddressBook.h>
 
 
-@interface TTTUnifiedCard : NSObject
+@interface EEEUnifiedCard : NSObject
 
 @property(nonatomic, readonly) ABRecordID recordID;
 @property(nonatomic) float position;

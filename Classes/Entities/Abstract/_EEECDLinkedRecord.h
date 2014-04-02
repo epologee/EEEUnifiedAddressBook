@@ -1,32 +1,32 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to TTTCDLinkedRecord.h instead.
+// Make changes to EEECDLinkedRecord.h instead.
 
 #import <CoreData/CoreData.h>
 
 
-extern const struct TTTCDLinkedRecordAttributes {
+extern const struct EEECDLinkedRecordAttributes {
 	__unsafe_unretained NSString *recordID;
-} TTTCDLinkedRecordAttributes;
+} EEECDLinkedRecordAttributes;
 
-extern const struct TTTCDLinkedRecordRelationships {
+extern const struct EEECDLinkedRecordRelationships {
 	__unsafe_unretained NSString *unifiedRecord;
-} TTTCDLinkedRecordRelationships;
+} EEECDLinkedRecordRelationships;
 
-extern const struct TTTCDLinkedRecordFetchedProperties {
-} TTTCDLinkedRecordFetchedProperties;
+extern const struct EEECDLinkedRecordFetchedProperties {
+} EEECDLinkedRecordFetchedProperties;
 
-@class TTTCDUnifiedRecord;
+@class EEECDUnifiedRecord;
 
 
 
-@interface TTTCDLinkedRecordID : NSManagedObjectID {}
+@interface EEECDLinkedRecordID : NSManagedObjectID {}
 @end
 
-@interface _TTTCDLinkedRecord : NSManagedObject {}
+@interface _EEECDLinkedRecord : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (TTTCDLinkedRecordID*)objectID;
+- (EEECDLinkedRecordID*)objectID;
 
 
 
@@ -46,7 +46,7 @@ extern const struct TTTCDLinkedRecordFetchedProperties {
 
 
 
-@property (nonatomic, strong) TTTCDUnifiedRecord *unifiedRecord;
+@property (nonatomic, strong) EEECDUnifiedRecord *unifiedRecord;
 
 //- (BOOL)validateUnifiedRecord:(id*)value_ error:(NSError**)error_;
 
@@ -56,11 +56,11 @@ extern const struct TTTCDLinkedRecordFetchedProperties {
 
 @end
 
-@interface _TTTCDLinkedRecord (CoreDataGeneratedAccessors)
+@interface _EEECDLinkedRecord (CoreDataGeneratedAccessors)
 
 @end
 
-@interface _TTTCDLinkedRecord (CoreDataGeneratedPrimitiveAccessors)
+@interface _EEECDLinkedRecord (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSNumber*)primitiveRecordID;
@@ -73,8 +73,8 @@ extern const struct TTTCDLinkedRecordFetchedProperties {
 
 
 
-- (TTTCDUnifiedRecord*)primitiveUnifiedRecord;
-- (void)setPrimitiveUnifiedRecord:(TTTCDUnifiedRecord*)value;
+- (EEECDUnifiedRecord*)primitiveUnifiedRecord;
+- (void)setPrimitiveUnifiedRecord:(EEECDUnifiedRecord*)value;
 
 
 @end

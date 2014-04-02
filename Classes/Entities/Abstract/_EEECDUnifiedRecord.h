@@ -1,38 +1,38 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to TTTCDUnifiedRecord.h instead.
+// Make changes to EEECDUnifiedRecord.h instead.
 
 #import <CoreData/CoreData.h>
 
 
-extern const struct TTTCDUnifiedRecordAttributes {
+extern const struct EEECDUnifiedRecordAttributes {
 	__unsafe_unretained NSString *position;
 	__unsafe_unretained NSString *recordID;
 	__unsafe_unretained NSString *sortFieldFirstName;
 	__unsafe_unretained NSString *sortFieldLastName;
-} TTTCDUnifiedRecordAttributes;
+} EEECDUnifiedRecordAttributes;
 
-extern const struct TTTCDUnifiedRecordRelationships {
+extern const struct EEECDUnifiedRecordRelationships {
 	__unsafe_unretained NSString *linkedRecord;
-} TTTCDUnifiedRecordRelationships;
+} EEECDUnifiedRecordRelationships;
 
-extern const struct TTTCDUnifiedRecordFetchedProperties {
-} TTTCDUnifiedRecordFetchedProperties;
+extern const struct EEECDUnifiedRecordFetchedProperties {
+} EEECDUnifiedRecordFetchedProperties;
 
-@class TTTCDLinkedRecord;
-
-
+@class EEECDLinkedRecord;
 
 
 
 
-@interface TTTCDUnifiedRecordID : NSManagedObjectID {}
+
+
+@interface EEECDUnifiedRecordID : NSManagedObjectID {}
 @end
 
-@interface _TTTCDUnifiedRecord : NSManagedObject {}
+@interface _EEECDUnifiedRecord : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (TTTCDUnifiedRecordID*)objectID;
+- (EEECDUnifiedRecordID*)objectID;
 
 
 
@@ -96,16 +96,16 @@ extern const struct TTTCDUnifiedRecordFetchedProperties {
 
 @end
 
-@interface _TTTCDUnifiedRecord (CoreDataGeneratedAccessors)
+@interface _EEECDUnifiedRecord (CoreDataGeneratedAccessors)
 
 - (void)addLinkedRecord:(NSSet*)value_;
 - (void)removeLinkedRecord:(NSSet*)value_;
-- (void)addLinkedRecordObject:(TTTCDLinkedRecord*)value_;
-- (void)removeLinkedRecordObject:(TTTCDLinkedRecord*)value_;
+- (void)addLinkedRecordObject:(EEECDLinkedRecord*)value_;
+- (void)removeLinkedRecordObject:(EEECDLinkedRecord*)value_;
 
 @end
 
-@interface _TTTCDUnifiedRecord (CoreDataGeneratedPrimitiveAccessors)
+@interface _EEECDUnifiedRecord (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSNumber*)primitivePosition;

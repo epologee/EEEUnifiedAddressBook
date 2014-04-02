@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "_TTTCDLinkedRecord.h"
+#import "_EEECDLinkedRecord.h"
 
-@interface TTTCDLinkedRecord : _TTTCDLinkedRecord
+@interface EEECDLinkedRecord : _EEECDLinkedRecord
 {}
 @end

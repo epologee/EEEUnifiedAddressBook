@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 #import <CoreData/CoreData.h>
-#import "TTTUnifiedAddressBook.h"
-#import "TTTCDLinkedRecord.h"
-#import "TTTCDUnifiedRecord.h"
+#import "EEEUnifiedAddressBook.h"
+#import "EEECDLinkedRecord.h"
+#import "EEECDUnifiedRecord.h"
 #import "NSManagedObjectContext+TTTBatchManipulation.h"
 
 #ifndef OR_EMPTY
@@ -46,13 +46,13 @@ CFTypeRef CFRetainIfNotNULL (CFTypeRef ref)
     return ref;
 }
 
-void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef info, void *context)
+void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef info, void *context)
 	{
 		NSLog(@"External change of the address book detected. Call updateAddressBookWithCompletion: to update the index.");
 		[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotificationName:object:) withObject:TT_UNIFIED_ADDRESS_BOOK_REQUEST_UPDATE_NOTIFICATION waitUntilDone:NO];
 	}
 
-@interface TTTUnifiedAddressBook ()
+@interface EEEUnifiedAddressBook ()
 
 @property(nonatomic, strong) NSManagedObjectModel *objectModel;
 @property(nonatomic, strong) NSPersistentStoreCoordinator *storeCoordinator;
@@ -61,7 +61,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 
 @end
 
-@implementation TTTUnifiedAddressBook
+@implementation EEEUnifiedAddressBook
 
 @synthesize objectModel = _managedObjectModel;
 @synthesize storeCoordinator = _storeCoordinator;
@@ -204,7 +204,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 		}
 
 		self.addressBook = addressBook;
-		ABAddressBookRegisterExternalChangeCallback(self.addressBook, tt_handleABExternalChange, (__bridge void *) self);
+		ABAddressBookRegisterExternalChangeCallback(self.addressBook, eee_handleABExternalChange, (__bridge void *) self);
 	}
 
 	return self;
@@ -219,7 +219,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 
 - (void)updateAddressBookWithCompletion:(void (^)())completion
 {
-	dispatch_queue_t backgroundQueue = dispatch_queue_create("nl.twelvetwenty.TTTUnifiedAddressBook", NULL);
+	dispatch_queue_t backgroundQueue = dispatch_queue_create("nl.twelvetwenty.EEEUnifiedAddressBook", NULL);
 
 	dispatch_async(backgroundQueue, ^
 		{
@@ -247,8 +247,8 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 
 	// Set the updated flag to NO for all linked cards.
 	NSError *error = nil;
-    [context ttt_deleteAllEntitiesNamed:[TTTCDLinkedRecord entityName] error:&error];
-    [context ttt_deleteAllEntitiesNamed:[TTTCDUnifiedRecord entityName] error:&error];
+    [context ttt_deleteAllEntitiesNamed:[EEECDLinkedRecord entityName] error:&error];
+    [context ttt_deleteAllEntitiesNamed:[EEECDUnifiedRecord entityName] error:&error];
 
 	ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
 	NSArray *records = (__bridge_transfer NSArray *) ABAddressBookCopyArrayOfAllPeopleInSource(addressBook, source);
@@ -263,7 +263,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 		ABRecordRef unifiedRecordRef = (__bridge ABRecordRef) untypedRecord;
 		NSNumber *recordID = [NSNumber numberWithInteger:ABRecordGetRecordID(unifiedRecordRef)];
 
-		TTTCDUnifiedRecord *unifiedRecord = [TTTCDUnifiedRecord insertInManagedObjectContext:context];
+		EEECDUnifiedRecord *unifiedRecord = [EEECDUnifiedRecord insertInManagedObjectContext:context];
 		unifiedRecord.recordID = recordID;
 		unifiedRecord.sortFieldFirstName = [self createSortFieldForRecord:unifiedRecordRef sortOrdering:kABPersonSortByFirstName];
 		unifiedRecord.sortFieldLastName = [self createSortFieldForRecord:unifiedRecordRef sortOrdering:kABPersonSortByLastName];
@@ -275,7 +275,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 			ABRecordRef linkedRecordRef = (__bridge ABRecordRef) untypedLinkedRecord;
 			NSNumber *linkedRecordID = [NSNumber numberWithInteger:ABRecordGetRecordID(linkedRecordRef)];
 
-			TTTCDLinkedRecord *linkedRecord = [TTTCDLinkedRecord insertInManagedObjectContext:context];
+			EEECDLinkedRecord *linkedRecord = [EEECDLinkedRecord insertInManagedObjectContext:context];
 			linkedRecord.recordID = linkedRecordID;
 			linkedRecord.unifiedRecord = unifiedRecord;
 		}
@@ -324,8 +324,8 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 
 - (NSArray *)allCards
 {
-	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[TTTCDUnifiedRecord entityName]];
-	NSString *sortKey = TTTCDUnifiedRecordAttributes.position;
+	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[EEECDUnifiedRecord entityName]];
+	NSString *sortKey = EEECDUnifiedRecordAttributes.position;
 	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]];
 
 	NSError *error = nil;
@@ -334,7 +334,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 	if (results)
 	{
 		cards = [NSMutableArray arrayWithCapacity:results.count];
-		for (TTTCDUnifiedRecord *record in results)
+		for (EEECDUnifiedRecord *record in results)
 		{
 			[cards addObject:record.personCard];
 		}
@@ -345,7 +345,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 
 - (void)cardsMatchingQuery:(NSString *)query withAsyncResults:(void (^)(NSArray *))resultsBlock
 {
-	dispatch_queue_t backgroundQueue = dispatch_queue_create("nl.twelvetwenty.TTTUnifiedAddressBook", NULL);
+	dispatch_queue_t backgroundQueue = dispatch_queue_create("nl.twelvetwenty.EEEUnifiedAddressBook", NULL);
 
 	dispatch_async(backgroundQueue, ^
 		{
@@ -362,8 +362,8 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 	NSLog(@"Searching within %li cards", ABAddressBookGetPersonCount(addressBook));
 	CFArrayRef recordsRef = ABAddressBookCopyPeopleWithName(addressBook, queryRef);
 	NSArray *records = (__bridge_transfer NSArray *) recordsRef;
-	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[TTTCDUnifiedRecord entityName]];
-	NSString *sortKey = TTTCDUnifiedRecordAttributes.position;
+	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[EEECDUnifiedRecord entityName]];
+	NSString *sortKey = EEECDUnifiedRecordAttributes.position;
 	request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:sortKey ascending:YES]];
 
 	NSError *error = nil;
@@ -375,7 +375,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 		if (query == nil || [query isEqualToString:@""])
 		{
 			cards = [NSMutableArray arrayWithCapacity:results.count];
-			for (TTTCDUnifiedRecord *record in results)
+			for (EEECDUnifiedRecord *record in results)
 			{
 				[cards addObject:record.personCard];
 			}
@@ -383,7 +383,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 		else
 		{
 			printf("Searching...");
-			NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(TTTCDUnifiedRecord *evaluatedObject, NSDictionary *bindings)
+			NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(EEECDUnifiedRecord *evaluatedObject, NSDictionary *bindings)
 				{
 					for (id untypedRecord in records)
 					{
@@ -398,7 +398,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 			printf("\n");
 
 			cards = [NSMutableArray arrayWithCapacity:filteredResults.count];
-			for (TTTCDUnifiedRecord *record in filteredResults)
+			for (EEECDUnifiedRecord *record in filteredResults)
 			{
 				[cards addObject:record.personCard];
 			}
@@ -415,7 +415,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 {
 	// Until it's possible to add an xcdatamodel in CocoaPods, the model will be written in code, not the visual modeling tool.
 	//
-	//    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"TTTUnifiedAddressBook" withExtension:@"momd"];
+	//    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"EEEUnifiedAddressBook" withExtension:@"momd"];
 	//    self.objectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 	//
 	self.objectModel = [self model];
@@ -429,7 +429,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 	if (NO)
 	{
 		NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-		NSURL *storeURL = [NSURL fileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"TTTUnifiedAddressBook.store"]];
+		NSURL *storeURL = [NSURL fileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"EEEUnifiedAddressBook.store"]];
 		NSError *error = nil;
 		BOOL giveUp = NO;
 		BOOL storeAdded = NO;
@@ -508,37 +508,37 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 	NSManagedObjectModel *model = [[NSManagedObjectModel alloc] init];
 
 	NSEntityDescription *unifiedRecord = [[NSEntityDescription alloc] init];
-	unifiedRecord.name = [TTTCDUnifiedRecord entityName];
-	unifiedRecord.managedObjectClassName = NSStringFromClass([TTTCDUnifiedRecord class]);
+	unifiedRecord.name = [EEECDUnifiedRecord entityName];
+	unifiedRecord.managedObjectClassName = NSStringFromClass([EEECDUnifiedRecord class]);
 
 	NSRelationshipDescription *rel_linkedRecord = [[NSRelationshipDescription alloc] init];
-	rel_linkedRecord.name = TTTCDUnifiedRecordRelationships.linkedRecord;
+	rel_linkedRecord.name = EEECDUnifiedRecordRelationships.linkedRecord;
 	rel_linkedRecord.minCount = 1;
 	rel_linkedRecord.maxCount = 0;
 
 	NSAttributeDescription *att_unifiedRecordID = [[NSAttributeDescription alloc] init];
-	att_unifiedRecordID.name = TTTCDUnifiedRecordAttributes.recordID;
+	att_unifiedRecordID.name = EEECDUnifiedRecordAttributes.recordID;
 	att_unifiedRecordID.attributeType = NSInteger32AttributeType;
 	[att_unifiedRecordID setIndexed:YES];
 
 	NSAttributeDescription *att_unifiedPosition = [[NSAttributeDescription alloc] init];
-	att_unifiedPosition.name = TTTCDUnifiedRecordAttributes.position;
+	att_unifiedPosition.name = EEECDUnifiedRecordAttributes.position;
 	att_unifiedPosition.attributeType = NSFloatAttributeType;
 
 	NSAttributeDescription *att_sortFieldFirstName = [[NSAttributeDescription alloc] init];
-	att_sortFieldFirstName.name = TTTCDUnifiedRecordAttributes.sortFieldFirstName;
+	att_sortFieldFirstName.name = EEECDUnifiedRecordAttributes.sortFieldFirstName;
 	att_sortFieldFirstName.attributeType = NSStringAttributeType;
 
 	NSAttributeDescription *att_sortFieldLastName = [[NSAttributeDescription alloc] init];
-	att_sortFieldLastName.name = TTTCDUnifiedRecordAttributes.sortFieldLastName;
+	att_sortFieldLastName.name = EEECDUnifiedRecordAttributes.sortFieldLastName;
 	att_sortFieldLastName.attributeType = NSStringAttributeType;
 
 	NSEntityDescription *linkedRecord = [[NSEntityDescription alloc] init];
-	linkedRecord.name = [TTTCDLinkedRecord entityName];
-	linkedRecord.managedObjectClassName = NSStringFromClass([TTTCDLinkedRecord class]);
+	linkedRecord.name = [EEECDLinkedRecord entityName];
+	linkedRecord.managedObjectClassName = NSStringFromClass([EEECDLinkedRecord class]);
 
 	NSRelationshipDescription *rel_unifiedRecord = [[NSRelationshipDescription alloc] init];
-	rel_unifiedRecord.name = TTTCDLinkedRecordRelationships.unifiedRecord;
+	rel_unifiedRecord.name = EEECDLinkedRecordRelationships.unifiedRecord;
 	rel_unifiedRecord.destinationEntity = unifiedRecord;
 	rel_unifiedRecord.inverseRelationship = rel_linkedRecord;
 	rel_unifiedRecord.minCount = 1;
@@ -548,7 +548,7 @@ void tt_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef inf
 	rel_linkedRecord.inverseRelationship = rel_unifiedRecord;
 
 	NSAttributeDescription *att_linkedRecordID = [[NSAttributeDescription alloc] init];
-	att_linkedRecordID.name = TTTCDLinkedRecordAttributes.recordID;
+	att_linkedRecordID.name = EEECDLinkedRecordAttributes.recordID;
 	att_linkedRecordID.attributeType = NSInteger32AttributeType;
 	[att_linkedRecordID setIndexed:YES];
 

@@ -18,14 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "_TTTCDUnifiedRecord.h"
+#import "_EEECDUnifiedRecord.h"
 #import <AddressBook/AddressBook.h>
 
-@class TTTUnifiedCard;
+@class EEEUnifiedCard;
 
-@interface TTTCDUnifiedRecord : _TTTCDUnifiedRecord
+@interface EEECDUnifiedRecord : _EEECDUnifiedRecord
 
-@property(nonatomic, readonly) TTTUnifiedCard *personCard;
+@property(nonatomic, readonly) EEEUnifiedCard *personCard;
 
 
 @end

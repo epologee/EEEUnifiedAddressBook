@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TTTUnifiedCard.h"
-#import "TTTUnifiedAddressBook.h"
+#import "EEEUnifiedCard.h"
+#import "EEEUnifiedAddressBook.h"
 
-@interface TTTUnifiedCard ()
+@interface EEEUnifiedCard ()
 
 @property(nonatomic) ABAddressBookRef addressBook;
 @property(nonatomic) ABRecordRef person;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation TTTUnifiedCard
+@implementation EEEUnifiedCard
 
 @synthesize addressBook = _addressBook;
 @synthesize person = _person;

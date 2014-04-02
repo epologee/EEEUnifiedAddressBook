@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
     :path: ../EEEUnifiedAddressBook.podspec
 
 SPEC CHECKSUMS:
-  EEEUnifiedAddressBook: ec1f30b8e695bc4474638d54c6830e3c0b440423
+  EEEUnifiedAddressBook: a56b9c85acd607b08d6558c2ca5a727f9ffc0340
   Kiwi: d60d7498b640a16f58b01925fc3c8d7c4d809f66
   TwelveTwentyToolkit: 4c50f6510981b0191ca39fa343add0aad1845fe4
 

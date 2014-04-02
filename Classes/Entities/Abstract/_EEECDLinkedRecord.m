@@ -1,23 +1,23 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to TTTCDLinkedRecord.m instead.
+// Make changes to EEECDLinkedRecord.m instead.
 
-#import "_TTTCDLinkedRecord.h"
+#import "_EEECDLinkedRecord.h"
 
-const struct TTTCDLinkedRecordAttributes TTTCDLinkedRecordAttributes = {
+const struct EEECDLinkedRecordAttributes EEECDLinkedRecordAttributes = {
 	.recordID = @"recordID",
 };
 
-const struct TTTCDLinkedRecordRelationships TTTCDLinkedRecordRelationships = {
+const struct EEECDLinkedRecordRelationships EEECDLinkedRecordRelationships = {
 	.unifiedRecord = @"unifiedRecord",
 };
 
-const struct TTTCDLinkedRecordFetchedProperties TTTCDLinkedRecordFetchedProperties = {
+const struct EEECDLinkedRecordFetchedProperties EEECDLinkedRecordFetchedProperties = {
 };
 
-@implementation TTTCDLinkedRecordID
+@implementation EEECDLinkedRecordID
 @end
 
-@implementation _TTTCDLinkedRecord
+@implementation _EEECDLinkedRecord
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
@@ -33,8 +33,8 @@ const struct TTTCDLinkedRecordFetchedProperties TTTCDLinkedRecordFetchedProperti
 	return [NSEntityDescription entityForName:@"LinkedRecord" inManagedObjectContext:moc_];
 }
 
-- (TTTCDLinkedRecordID*)objectID {
-	return (TTTCDLinkedRecordID*)[super objectID];
+- (EEECDLinkedRecordID*)objectID {
+	return (EEECDLinkedRecordID*)[super objectID];
 }
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {

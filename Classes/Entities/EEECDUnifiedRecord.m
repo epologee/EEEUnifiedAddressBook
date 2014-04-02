@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TTTCDUnifiedRecord.h"
-#import "TTTUnifiedCard.h"
+#import "EEECDUnifiedRecord.h"
+#import "EEEUnifiedCard.h"
 
 /**
 NSLog(@"kABPersonFirstNameProperty: %@", [self stringForProperty:kABPersonFirstNameProperty]);
@@ -49,18 +49,18 @@ NSLog(@"kABPersonRelatedNamesProperty: %@", [self arrayForProperty:kABPersonRela
 NSLog(@"kABPersonSocialProfileProperty: %@", [self arrayForProperty:kABPersonSocialProfileProperty]);
 */
 
-@interface TTTCDUnifiedRecord ()
+@interface EEECDUnifiedRecord ()
 
 
 
 @end
 
-@implementation TTTCDUnifiedRecord
+@implementation EEECDUnifiedRecord
 
 
-- (TTTUnifiedCard *)personCard
+- (EEEUnifiedCard *)personCard
 {
-    return [[TTTUnifiedCard alloc] initWithRecordID:self.recordIDValue position:self.positionValue];
+    return [[EEEUnifiedCard alloc] initWithRecordID:self.recordIDValue position:self.positionValue];
 }
 
 @end

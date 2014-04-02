@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.dependency 'TwelveTwentyToolkit/CoreData'
 
   s.source_files = "Classes/**/*.{h,m}"
-  s.resources = "Assets/**/*"
+  s.resources = "Assets/*.xcdatamodeld"
 
   s.ios.exclude_files = "Classes/osx"
   s.osx.exclude_files = "Classes/ios"

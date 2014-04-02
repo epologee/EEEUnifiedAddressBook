@@ -1,26 +1,26 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to TTTCDUnifiedRecord.m instead.
+// Make changes to EEECDUnifiedRecord.m instead.
 
-#import "_TTTCDUnifiedRecord.h"
+#import "_EEECDUnifiedRecord.h"
 
-const struct TTTCDUnifiedRecordAttributes TTTCDUnifiedRecordAttributes = {
+const struct EEECDUnifiedRecordAttributes EEECDUnifiedRecordAttributes = {
 	.position = @"position",
 	.recordID = @"recordID",
 	.sortFieldFirstName = @"sortFieldFirstName",
 	.sortFieldLastName = @"sortFieldLastName",
 };
 
-const struct TTTCDUnifiedRecordRelationships TTTCDUnifiedRecordRelationships = {
+const struct EEECDUnifiedRecordRelationships EEECDUnifiedRecordRelationships = {
 	.linkedRecord = @"linkedRecord",
 };
 
-const struct TTTCDUnifiedRecordFetchedProperties TTTCDUnifiedRecordFetchedProperties = {
+const struct EEECDUnifiedRecordFetchedProperties EEECDUnifiedRecordFetchedProperties = {
 };
 
-@implementation TTTCDUnifiedRecordID
+@implementation EEECDUnifiedRecordID
 @end
 
-@implementation _TTTCDUnifiedRecord
+@implementation _EEECDUnifiedRecord
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
@@ -36,8 +36,8 @@ const struct TTTCDUnifiedRecordFetchedProperties TTTCDUnifiedRecordFetchedProper
 	return [NSEntityDescription entityForName:@"UnifiedRecord" inManagedObjectContext:moc_];
 }
 
-- (TTTCDUnifiedRecordID*)objectID {
-	return (TTTCDUnifiedRecordID*)[super objectID];
+- (EEECDUnifiedRecordID*)objectID {
+	return (EEECDUnifiedRecordID*)[super objectID];
 }
 
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
