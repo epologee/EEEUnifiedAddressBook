@@ -4,4 +4,6 @@
 
 @property (nonatomic, strong) UIWindow *window;
 
++ (UINavigationController *)rootNavigationController;
+
 @end

@@ -2,6 +2,12 @@
 
 @implementation UABTestsAppDelegate
 
++ (UINavigationController *)rootNavigationController
+{
+    UABTestsAppDelegate *delegate = (UABTestsAppDelegate *) [UIApplication sharedApplication].delegate;
+    return (UINavigationController *) delegate.window.rootViewController;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
