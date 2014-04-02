@@ -213,7 +213,6 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
     ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, ABPersonGetSortOrdering());
     CFReleaseIfNotNULL(source);
 
-    printf("Indexing...");
     NSUInteger idx = 0;
     NSUInteger count = [records count];
     for (id untypedRecord in records)
@@ -238,20 +237,13 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
             linkedRecord.unifiedRecord = unifiedRecord;
         }
 
-        printf(".");
         idx++;
     }
-
-    printf("\n");
 
     if (![context save:&error])
     {
         NSLog(@"Could not save background context: %@", error);
         return NO;
-    }
-    else
-    {
-        NSLog(@"Unified %i records", idx);
     }
 
     return YES;
@@ -317,7 +309,6 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
     ABAddressBookRef addressBook = [[self class] newAddressBookInline];
     NSManagedObjectContext *context = [NSThread mainThread] ? self.mainContext : [self newContext];
     CFStringRef queryRef = (__bridge CFStringRef) query;
-    NSLog(@"Searching within %li cards", ABAddressBookGetPersonCount(addressBook));
     CFArrayRef recordsRef = ABAddressBookCopyPeopleWithName(addressBook, queryRef);
     NSArray *records = (__bridge_transfer NSArray *) recordsRef;
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:[EEECDUnifiedRecord entityName]];
@@ -340,7 +331,6 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
         }
         else
         {
-            printf("Searching...");
             NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(EEECDUnifiedRecord *evaluatedObject, NSDictionary *bindings) {
                 for (id untypedRecord in records)
                 {
@@ -348,11 +338,9 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
                     ABRecordID recordID = ABRecordGetRecordID(record);
                     if (evaluatedObject.recordIDValue == recordID) return YES;
                 }
-                printf(".");
                 return NO;
             }];
             NSArray *filteredResults = [results filteredArrayUsingPredicate:filter];
-            printf("\n");
 
             cards = [NSMutableArray arrayWithCapacity:filteredResults.count];
             for (EEECDUnifiedRecord *record in filteredResults)
