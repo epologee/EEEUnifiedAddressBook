@@ -13,6 +13,12 @@
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
+        BOOL runningTests = (NSClassFromString(@"UABTestsAppDelegate") != nil);
+        if (runningTests)
+        {
+            return UIApplicationMain(argc, argv, nil, @"UABTestsAppDelegate");
+        }
+
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([UABAppDelegate class]));
     }
 }
