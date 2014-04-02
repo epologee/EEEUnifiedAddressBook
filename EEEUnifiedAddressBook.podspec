@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "EEEUnifiedAddressBook"
   s.version          = "0.1.0"
-  s.summary          = "Object wrapper for Cocoa Touch' address book programming API"
+  s.summary          = "Objective-C wrapper for Cocoa Touch' address book programming API"
   s.homepage         = "https://github.com/epologee/EEEUnifiedAddressBook"
   s.license          = "Unlicense"
   s.author           = { "Eric-Paul Lecluse" => "e@epologee.com" }

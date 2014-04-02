@@ -22,5 +22,5 @@ Eric-Paul Lecluse, e@epologee.com
 
 ## License
 
-EEEUnifiedAddressBook is available under the MIT license. See the LICENSE file for more info.
+EEEUnifiedAddressBook is available under the Unlicense license. See the LICENSE file for more info.
 
