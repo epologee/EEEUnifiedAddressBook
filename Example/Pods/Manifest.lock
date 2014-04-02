@@ -1,0 +1,30 @@
+PODS:
+  - EEEUnifiedAddressBook (0.1.0):
+    - TwelveTwentyToolkit/CoreData
+  - Kiwi/ARC (2.2.4)
+  - Kiwi/NonARC (2.2.4)
+  - Kiwi/XCTest (2.2.4):
+    - Kiwi/ARC
+    - Kiwi/NonARC
+  - TwelveTwentyToolkit/Core (0.5.1)
+  - TwelveTwentyToolkit/CoreData (0.5.1):
+    - TwelveTwentyToolkit/Logging
+  - TwelveTwentyToolkit/Foundation (0.5.1):
+    - TwelveTwentyToolkit/Core
+  - TwelveTwentyToolkit/Logging (0.5.1):
+    - TwelveTwentyToolkit/Foundation
+
+DEPENDENCIES:
+  - EEEUnifiedAddressBook (from `../EEEUnifiedAddressBook.podspec`)
+  - Kiwi/XCTest
+
+EXTERNAL SOURCES:
+  EEEUnifiedAddressBook:
+    :path: ../EEEUnifiedAddressBook.podspec
+
+SPEC CHECKSUMS:
+  EEEUnifiedAddressBook: ec1f30b8e695bc4474638d54c6830e3c0b440423
+  Kiwi: d60d7498b640a16f58b01925fc3c8d7c4d809f66
+  TwelveTwentyToolkit: 4c50f6510981b0191ca39fa343add0aad1845fe4
+
+COCOAPODS: 0.31.1

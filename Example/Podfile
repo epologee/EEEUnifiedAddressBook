@@ -1,7 +1,9 @@
-pod "EEEUnifiedAddressBook", :path => "../EEEUnifiedAddressBook.podspec"
+platform :ios, "7.0"
 
-target "Demo" do
+target "UnifiedAddressBook" do
+  pod "EEEUnifiedAddressBook", :path => "../EEEUnifiedAddressBook.podspec"
 end
 
-target "DemoTests" do
+target "UnifiedAddressBookTests" do
+  pod "Kiwi/XCTest"
 end

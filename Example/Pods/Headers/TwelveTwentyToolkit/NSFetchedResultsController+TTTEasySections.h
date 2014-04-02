@@ -1,0 +1,1 @@
+../../TwelveTwentyToolkit/TwelveTwentyToolkit/CoreData/ios/NSFetchedResultsController+TTTEasySections.h
