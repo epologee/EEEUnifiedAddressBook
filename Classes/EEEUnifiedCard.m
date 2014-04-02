@@ -213,7 +213,7 @@
     @"value":value
     };
 
-    [[NSException exceptionWithName:@"TT_UNIFIED_ADDRESS_BOOK_EXCEPTION" reason:[NSString stringWithFormat:@"Could not preprocess value of property type `%i`", propertyType] userInfo:userInfo] raise];
+    [[NSException exceptionWithName:@"EEE_UNIFIED_ADDRESS_BOOK_EXCEPTION" reason:[NSString stringWithFormat:@"Could not preprocess value of property type `%i`", propertyType] userInfo:userInfo] raise];
     return nil;
 }
 
