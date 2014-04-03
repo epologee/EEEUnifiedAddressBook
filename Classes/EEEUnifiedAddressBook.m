@@ -46,9 +46,7 @@ CFTypeRef CFRetainIfNotNULL(CFTypeRef ref) {
 
 void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
     NSLog(@"External change of the address book detected. Call updateAddressBookWithCompletion: to update the index.");
-    [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotificationName:object:)
-                                                           withObject:EEE_UNIFIED_ADDRESS_BOOK_REQUEST_UPDATE_NOTIFICATION
-                                                        waitUntilDone:NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:EEE_UNIFIED_ADDRESS_BOOK_REQUEST_UPDATE_NOTIFICATION object:nil];
 }
 
 @interface EEEUnifiedAddressBook ()

@@ -37,11 +37,11 @@
 
 - (void)dealloc
 {
-	self.person = NULL;
-	self.addressBook = NULL;
+    self.person = NULL;
+    self.addressBook = NULL;
 
-	CFReleaseIfNotNULL(_linkedPeople);
-	_linkedPeople = NULL;
+    CFReleaseIfNotNULL(_linkedPeople);
+    _linkedPeople = NULL;
 }
 
 - (id)initWithRecordID:(ABRecordID)recordID position:(float)position
@@ -50,7 +50,7 @@
     if (self)
     {
         self.recordID = recordID;
-		self.position = position;
+        self.position = position;
     }
 
     return self;
@@ -58,18 +58,18 @@
 
 - (void)setAddressBook:(ABAddressBookRef)addressBook
 {
-	CFRetainIfNotNULL(addressBook);
-	CFReleaseIfNotNULL(_addressBook);
+    CFRetainIfNotNULL(addressBook);
+    CFReleaseIfNotNULL(_addressBook);
     _addressBook = addressBook;
 
-	self.person = NULL;
+    self.person = NULL;
 }
 
 - (void)setPerson:(ABRecordRef)person
 {
-	CFRetainIfNotNULL(person);
-	CFReleaseIfNotNULL(_person);
-	_person = person;
+    CFRetainIfNotNULL(person);
+    CFReleaseIfNotNULL(_person);
+    _person = person;
 }
 
 - (ABRecordRef)person
@@ -133,12 +133,18 @@
 
 - (id)valueForProperty:(ABPropertyID)propertyID
 {
+    return [self valueForProperty:propertyID includeLabels:NO];
+}
+
+- (id)valueForProperty:(ABPropertyID)propertyID includeLabels:(BOOL)labels
+{
     NSAssert(self.addressBook, @"Use `setAddressBook:` to set a valid address book reference before calling this method.");
 
     ABPropertyType propertyType = ABPersonGetTypeOfProperty(propertyID);
 
     if (propertyType & kABMultiValueMask)
     {
+        NSMutableDictionary *valuesByLabel = nil;
         NSMutableArray *valueList = [NSMutableArray array];
         CFArrayRef linkedPeople = self.linkedPeople;
         CFIndex linkedCount = CFArrayGetCount(linkedPeople);
@@ -154,14 +160,25 @@
                     for (CFIndex i = 0; i < count; i++)
                     {
                         id bridgedValue = (__bridge_transfer id) ABMultiValueCopyValueAtIndex(multiValue, i);
-                        [valueList addObject:[self preprocessABValue:bridgedValue ofPropertyType:propertyType]];
+                        CFStringRef bridgedLabel = ABMultiValueCopyLabelAtIndex(multiValue, i);
+                        id preprocessedValue = [self preprocessABValue:bridgedValue ofPropertyType:propertyType];
+                        if (labels && bridgedLabel)
+                        {
+                            valuesByLabel = valuesByLabel ?: [NSMutableDictionary dictionary];
+                            NSString *localizedLabel = (__bridge_transfer NSString *) ABAddressBookCopyLocalizedLabel(bridgedLabel);
+                            valuesByLabel[localizedLabel] = preprocessedValue;
+                        }
+                        else
+                        {
+                            [valueList addObject:preprocessedValue];
+                        }
                     }
                 }
                 CFRelease(multiValue);
             }
         }
 
-        return valueList;
+        return valuesByLabel ?: valueList;
     }
     else
     {
@@ -188,6 +205,8 @@
 
     switch (singularPropertyType)
     {
+        default:
+            break;
         case kABStringPropertyType:
         case kABIntegerPropertyType:
         case kABRealPropertyType:
@@ -210,10 +229,12 @@
     }
 
     NSDictionary *userInfo = @{
-    @"value":value
+            @"value" : value
     };
 
-    [[NSException exceptionWithName:@"EEE_UNIFIED_ADDRESS_BOOK_EXCEPTION" reason:[NSString stringWithFormat:@"Could not preprocess value of property type `%i`", propertyType] userInfo:userInfo] raise];
+    [[NSException exceptionWithName:@"EEE_UNIFIED_ADDRESS_BOOK_EXCEPTION"
+                             reason:[NSString stringWithFormat:@"Could not preprocess value of property type `%i`", propertyType]
+                           userInfo:userInfo] raise];
     return nil;
 }
 

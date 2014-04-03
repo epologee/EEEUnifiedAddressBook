@@ -80,6 +80,8 @@ NSLog(@"kABPersonSocialProfileProperty: %@", [self arrayForProperty:kABPersonSoc
 
 - (id)valueForProperty:(ABPropertyID)propertyID;
 
+- (id)valueForProperty:(ABPropertyID)propertyID includeLabels:(BOOL)labels;
+
 - (void)print;
 
 @end
