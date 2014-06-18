@@ -206,10 +206,7 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
     [context ttt_deleteAllEntitiesNamed:[EEECDLinkedRecord entityName] error:&error];
     [context ttt_deleteAllEntitiesNamed:[EEECDUnifiedRecord entityName] error:&error];
 
-    ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
-    NSArray *records = (__bridge_transfer NSArray *) ABAddressBookCopyArrayOfAllPeopleInSource(addressBook, source);
-    ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, ABPersonGetSortOrdering());
-    CFReleaseIfNotNULL(source);
+    NSArray *records = (__bridge_transfer NSArray *) ABAddressBookCopyArrayOfAllPeople(addressBook);
 
     NSUInteger idx = 0;
     NSUInteger count = [records count];
