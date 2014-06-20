@@ -208,12 +208,16 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
 
     NSArray *records = (__bridge_transfer NSArray *) ABAddressBookCopyArrayOfAllPeople(addressBook);
 
+    NSMutableDictionary *root = [NSMutableDictionary dictionary];
+
     NSUInteger idx = 0;
     NSUInteger count = [records count];
     for (id untypedRecord in records)
     {
         ABRecordRef unifiedRecordRef = (__bridge ABRecordRef) untypedRecord;
         NSNumber *recordID = [NSNumber numberWithInteger:ABRecordGetRecordID(unifiedRecordRef)];
+        
+        if (root[recordID]) continue;
 
         EEECDUnifiedRecord *unifiedRecord = [EEECDUnifiedRecord insertInManagedObjectContext:context];
         unifiedRecord.recordID = recordID;
@@ -230,6 +234,8 @@ void eee_handleABExternalChange(ABAddressBookRef addressBook, CFDictionaryRef in
             EEECDLinkedRecord *linkedRecord = [EEECDLinkedRecord insertInManagedObjectContext:context];
             linkedRecord.recordID = linkedRecordID;
             linkedRecord.unifiedRecord = unifiedRecord;
+            
+            root[linkedRecordID] = @YES;
         }
 
         idx++;
